@@ -5,7 +5,7 @@
 
 Video [demo here](https://youtu.be/Wks9-9V7eMY).
 
-This module provides Node.js code to get control the arm on your TJ Bot via the servo motor. It uses [Watson Speech to Text](https://www.ibm.com/watson/developercloud/speech-to-text.html) to parse audio from the microphone, processes your commands (e.g command your bot to wave its arm, or dance to a song) and uses [Watson Text to Speech](https://www.ibm.com/watson/developercloud/text-to-speech.html) to "read" out a text response!
+This module provides Node.js code to get control the arm on your TJ Bot via the servo motor. It uses [Watson Speech to Text](https://www.ibm.com/watson/services/speech-to-text) to parse audio from the microphone, processes your commands (e.g command your bot to wave its arm, or dance to a song) and uses [Watson Text to Speech](https://www.ibm.com/watson/services/text-to-speech) to "read" out a text response!
 
 **This is designed to run on a Pi with a servo motor attached. See [Wiring Servo](#wiring-your-servo-motor) for how to connect your servo motor**
 Before you start, it is recommended you become familiar with setting up your TJBot/Raspberry Pi by looking at [the instructions here.](http://www.instructables.com/member/TJBot/)
@@ -13,9 +13,9 @@ Before you start, it is recommended you become familiar with setting up your TJB
 
 ## How It Works
 - Listens for voice commands. See [**Running**](#running) for a list of voice commands supported in this sample.
-- Sends audio from the microphone to the [Watson Speech to Text](https://www.ibm.com/watson/developercloud/speech-to-text.html) Service - STT to transcribe audio to text.
+- Sends audio from the microphone to the [Watson Speech to Text](https://www.ibm.com/watson/services/speech-to-text) Service - STT to transcribe audio to text.
 - Parses the text looking for commands
-- Once a command is recognized, an appropriate action (e.g wave arm) is taken and TJ verbalizes this action as well using  [Watson Text to Speech](https://www.ibm.com/watson/developercloud/text-to-speech.html) to generate an audio file.
+- Once a command is recognized, an appropriate action (e.g wave arm) is taken and TJ verbalizes this action as well using  [Watson Text to Speech](https://www.ibm.com/watson/services/text-to-speech) to generate an audio file.
 - The robot plays back the response through using the Alsa tools
 
 ##Hardware
@@ -148,17 +148,17 @@ var micInstance = mic({ 'rate': '44100', 'channels': '2', 'debug': false, 'exitO
 ## Whats Next
 
 There are a few things you can do .. and ways to take your robot forward!
-- Use Watson Conversation to improve intent detection. Leverage machine learning capabilities within Watson conversation to better match intents even when recognized text is not accurate.
+- Use Watson Assistant to improve intent detection. Leverage machine learning capabilities within Watson Assistant to better match intents even when recognized text is not accurate.
 - Animate robot interactions using arm movements + lights (e.g wave when your robot speaks or laughs etc)
 - Correlate additional data to robot arm movements ... e.g control your robot arm using an app, a wearable/smartwatch etc.
 
 ##update
-- I implemented a watson conversation based version where the conversation api is used to detect intent from a spoken command.
+- I implemented a watson assistant based version where the assistant api is used to detect intent from a spoken command.
   ```
   sudo node wave_conversation.js
   ```
-  - You will need to set up your watson conversation flow and set up a workspace. More on that [here](http://www.instructables.com/id/Build-a-Talking-Robot-With-Watson-and-Raspberry-Pi/#step6) .
-  - You import sample conversation flow in the folder (workspace.json) to get you started. This creates intents for actions like "hello" , "see" , "wave" , "introduce" etc
+  - You will need to set up your watson assistant flow and set up a workspace. More on that [here](http://www.instructables.com/id/Build-a-Talking-Robot-With-Watson-and-Raspberry-Pi/#step6) .
+  - You import sample assistant flow in the folder (workspace.json) to get you started. This creates intents for actions like "hello" , "see" , "wave" , "introduce" etc
   - Finally, this sample (wave_conversation.js) uses both audio and LED. These two hardware devices [are known to conflict](https://github.com/jgarff/rpi_ws281x#limitations) - a workaround is to disable onboard audio and use USB audio on your Pi.
 
 ## Contributing and Issues
@@ -168,7 +168,7 @@ Also, if you find any issues (bugs, etc) or have questions, please feel free to 
 
 # Dependencies List
 
-- Watson Developer Cloud : [Watson Speech to Text](https://www.ibm.com/watson/developercloud/speech-to-text.html), [Watson Conversation](https://www.ibm.com/watson/developercloud/conversation.html), and [Watson Text to Speech](https://www.ibm.com/watson/developercloud/text-to-speech.html).
+- Watson Developer Cloud : [Watson Speech to Text](https://www.ibm.com/watson/services/speech-to-text), [Watson Assistant](https://www.ibm.com/cloud/watson-assistant/), and [Watson Text to Speech](https://www.ibm.com/watson/services/text-to-speech).
 - [mic](https://www.npmjs.com/package/mic) npm package : for reading audio input
 - [pigpio](https://www.npmjs.com/package/pigpio) npm package : Fast (software) GPIO, PWM, servo control, state change notification, and interrupt handling on the Raspberry Pi.
 - [web-audio-api](https://www.npmjs.com/package/web-audio-api) : implementation (partial) of the HTML5 web audio api, used to decode sound files.
