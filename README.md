@@ -148,17 +148,17 @@ var micInstance = mic({ 'rate': '44100', 'channels': '2', 'debug': false, 'exitO
 ## Whats Next
 
 There are a few things you can do .. and ways to take your robot forward!
-- Use Watson Conversation to improve intent detection. Leverage machine learning capabilities within Watson conversation to better match intents even when recognized text is not accurate.
+- Use Watson Assistant to improve intent detection. Leverage machine learning capabilities within Watson Assistant to better match intents even when recognized text is not accurate.
 - Animate robot interactions using arm movements + lights (e.g wave when your robot speaks or laughs etc)
 - Correlate additional data to robot arm movements ... e.g control your robot arm using an app, a wearable/smartwatch etc.
 
 ##update
-- I implemented a watson conversation based version where the conversation api is used to detect intent from a spoken command.
+- I implemented a watson assistant based version where the assistant api is used to detect intent from a spoken command.
   ```
   sudo node wave_conversation.js
   ```
-  - You will need to set up your watson conversation flow and set up a workspace. More on that [here](http://www.instructables.com/id/Build-a-Talking-Robot-With-Watson-and-Raspberry-Pi/#step6) .
-  - You import sample conversation flow in the folder (workspace.json) to get you started. This creates intents for actions like "hello" , "see" , "wave" , "introduce" etc
+  - You will need to set up your watson assistant flow and set up a workspace. More on that [here](http://www.instructables.com/id/Build-a-Talking-Robot-With-Watson-and-Raspberry-Pi/#step6) .
+  - You import sample assistant flow in the folder (workspace.json) to get you started. This creates intents for actions like "hello" , "see" , "wave" , "introduce" etc
   - Finally, this sample (wave_conversation.js) uses both audio and LED. These two hardware devices [are known to conflict](https://github.com/jgarff/rpi_ws281x#limitations) - a workaround is to disable onboard audio and use USB audio on your Pi.
 
 ## Contributing and Issues
