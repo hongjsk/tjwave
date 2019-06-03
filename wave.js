@@ -20,22 +20,35 @@ The service converts the audio to text and saves the returned text in "textStrea
 var pigpio = require('pigpio')
 pigpio.initialize();
 
-
-var watson = require('watson-developer-cloud');
 var config = require('./config');  // gets our username and passwords from the config.js files
-var speech_to_text = watson.speech_to_text({
+var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+var speech_to_text = new SpeechToTextV1({
   username: config.STTUsername,
   password: config.STTPassword,
+  iam_apikey: config.STT_IAM_APIKEY,
+  url: config.STT_URL,
   version: config.version
 });
 
 var fs = require('fs');
 var exec = require('child_process').exec;
-var text_to_speech = watson.text_to_speech({
+var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var text_to_speech = new TextToSpeechV1({
   username: config.TTSUsername,
   password: config.TTSPassword,
+  iam_apikey: config.TTS_IAM_APIKEY,
+  url: config.TTS_URL,
   version: 'v1'
 });
+
+text_to_speech.listVoices(null, function(error, data) {
+  if (error) {
+    console.log(error);
+  } else {
+    //console.log(data.voices);
+  }
+});
+
 
 var AudioContext = require('web-audio-api').AudioContext
 context = new AudioContext
@@ -77,8 +90,9 @@ In this step, the audio sample is sent (piped) to "Watson Speech to Text" to tra
 The service converts the audio to text and saves the returned text in "textStream"
 */
 var textStream = micInputStream.pipe(
-  speech_to_text.createRecognizeStream({
-    content_type: 'audio/l16; rate=44100; channels=2'
+  speech_to_text.recognizeUsingWebSocket({
+    content_type: 'audio/l16; rate=44100; channels=2',
+    interim_results: true, // need 'true' for watson-developer-cloud 3.x, otherwise results don't come back
   })
 );
 

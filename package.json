@@ -9,11 +9,11 @@
   "author": "Victor Dibia",
   "license": "ISC",
   "dependencies": {
-    "mic": "^2.1.1",
+    "mic": "^2.1.2",
     "pigpio": "^0.4.0",
     "node-aplay": "^1.0.3",
     "rpi-ws281x-native": "^0.8.1",
-    "watson-developer-cloud": "^2.8.1",
+    "watson-developer-cloud": "^3.4.5",
     "web-audio-api": "^0.2.2",
     "which": "^1.2.11"
   }
