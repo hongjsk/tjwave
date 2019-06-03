@@ -22,7 +22,7 @@ pigpio.initialize();
 
 
 var config = require('./config');  // gets configurations from the config.js files
-var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+var SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
 var speech_to_text = new SpeechToTextV1({
   username: config.STTUsername,
   password: config.STTPassword,
@@ -35,7 +35,7 @@ var speech_to_text = new SpeechToTextV1({
 var fs = require('fs');
 var exec = require('child_process').exec;
 
-var WatsonAssistantV2 = require('watson-developer-cloud/assistant/v2');
+var WatsonAssistantV2 = require('ibm-watson/assistant/v2');
 var assistant = new WatsonAssistantV2({
   username: config.AssistUsername,
   password: config.AssistPassword,
@@ -44,7 +44,7 @@ var assistant = new WatsonAssistantV2({
   version: '2018-02-16'
 });
 
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 var text_to_speech = new TextToSpeechV1({
   username: config.TTSUsername,
   password: config.TTSPassword,
@@ -297,18 +297,22 @@ function speak(textstring){
       voice: config.voice,
       accept: 'audio/wav'
     };
-    text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav')).on('close', function() {
-      isspeaking = true ;
-      soundobject = new Sound("output.wav");
-      soundobject.play();
-      soundobject.on('complete', function () {
-        console.log('Done with playback! for ' + textstring + " iswaving " + iswaving);
-        if (!iswaving && !isplaying) {
-          micInstance.resume();
-          setLEDColor("white", 255)
-        }
-        isspeaking = false ;
+    text_to_speech.synthesize(params).then(function(audio) {
+      audio.pipe(fs.createWriteStream('output.wav')).on('close', function() {
+        isspeaking = true ;
+        soundobject = new Sound("output.wav");
+        soundobject.play();
+        soundobject.on('complete', function () {
+          console.log('Done with playback! for ' + textstring + " iswaving " + iswaving);
+          if (!iswaving && !isplaying) {
+            micInstance.resume();
+            setLEDColor("white", 255)
+          }
+          isspeaking = false ;
+        });
       });
+    }).catch(function(err) {
+      console.log('error:'+err);
     });
 
   }
@@ -394,7 +398,7 @@ function findPeaks(pcmdata, samplerate, threshold){
 *********************************************************************
 */
 
-var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+var VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
 var fs = require('fs');
 var config = require("./config");
 var child_process = require('child_process');

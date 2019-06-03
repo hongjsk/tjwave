@@ -21,7 +21,7 @@ var pigpio = require('pigpio')
 pigpio.initialize();
 
 var config = require('./config');  // gets our username and passwords from the config.js files
-var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+var SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
 var speech_to_text = new SpeechToTextV1({
   username: config.STTUsername,
   password: config.STTPassword,
@@ -32,7 +32,7 @@ var speech_to_text = new SpeechToTextV1({
 
 var fs = require('fs');
 var exec = require('child_process').exec;
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 var text_to_speech = new TextToSpeechV1({
   username: config.TTSUsername,
   password: config.TTSPassword,
@@ -92,7 +92,7 @@ The service converts the audio to text and saves the returned text in "textStrea
 var textStream = micInputStream.pipe(
   speech_to_text.recognizeUsingWebSocket({
     content_type: 'audio/l16; rate=44100; channels=2',
-    interim_results: true, // need 'true' for watson-developer-cloud 3.x, otherwise results don't come back
+    interim_results: true, // need 'true' for ibm-watson 3.x, otherwise results don't come back
   })
 );
 
@@ -209,17 +209,21 @@ function speak(textstring){
     voice: config.voice,
     accept: 'audio/wav'
   };
-  text_to_speech.synthesize(params).pipe(fs.createWriteStream('output.wav')).on('close', function() {
+  text_to_speech.synthesize(params).then(function(audio) {
+    audio.pipe(fs.createWriteStream('output.wav')).on('close', function() {
 
-    soundobject = new Sound("output.wav");
-    soundobject.play();
-    soundobject.on('complete', function () {
-      console.log('Done with playback! for ' + textstring + " iswaving " + iswaving);
-      if (!iswaving && !isplaying) {
-        micInstance.resume();
-      }
+      soundobject = new Sound("output.wav");
+      soundobject.play();
+      soundobject.on('complete', function () {
+        console.log('Done with playback! for ' + textstring + " iswaving " + iswaving);
+        if (!iswaving && !isplaying) {
+          micInstance.resume();
+        }
 
+      });
     });
+  }).catch(function(err) {
+    console.log('error:'+err);
   });
 
 }
