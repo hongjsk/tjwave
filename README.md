@@ -5,7 +5,7 @@
 
 Video [demo here](https://youtu.be/Wks9-9V7eMY).
 
-This module provides Node.js code to get control the arm on your TJ Bot via the servo motor. It uses [Watson Speech to Text](https://www.ibm.com/watson/developercloud/speech-to-text.html) to parse audio from the microphone, processes your commands (e.g command your bot to wave its arm, or dance to a song) and uses [Watson Text to Speech](https://www.ibm.com/watson/developercloud/text-to-speech.html) to "read" out a text response!
+This module provides Node.js code to get control the arm on your TJ Bot via the servo motor. It uses [Watson Speech to Text](https://www.ibm.com/watson/services/speech-to-text) to parse audio from the microphone, processes your commands (e.g command your bot to wave its arm, or dance to a song) and uses [Watson Text to Speech](https://www.ibm.com/watson/services/text-to-speech) to "read" out a text response!
 
 **This is designed to run on a Pi with a servo motor attached. See [Wiring Servo](#wiring-your-servo-motor) for how to connect your servo motor**
 Before you start, it is recommended you become familiar with setting up your TJBot/Raspberry Pi by looking at [the instructions here.](http://www.instructables.com/member/TJBot/)
@@ -13,9 +13,9 @@ Before you start, it is recommended you become familiar with setting up your TJB
 
 ## How It Works
 - Listens for voice commands. See [**Running**](#running) for a list of voice commands supported in this sample.
-- Sends audio from the microphone to the [Watson Speech to Text](https://www.ibm.com/watson/developercloud/speech-to-text.html) Service - STT to transcribe audio to text.
+- Sends audio from the microphone to the [Watson Speech to Text](https://www.ibm.com/watson/services/speech-to-text) Service - STT to transcribe audio to text.
 - Parses the text looking for commands
-- Once a command is recognized, an appropriate action (e.g wave arm) is taken and TJ verbalizes this action as well using  [Watson Text to Speech](https://www.ibm.com/watson/developercloud/text-to-speech.html) to generate an audio file.
+- Once a command is recognized, an appropriate action (e.g wave arm) is taken and TJ verbalizes this action as well using  [Watson Text to Speech](https://www.ibm.com/watson/services/text-to-speech) to generate an audio file.
 - The robot plays back the response through using the Alsa tools
 
 ##Hardware
@@ -168,7 +168,7 @@ Also, if you find any issues (bugs, etc) or have questions, please feel free to 
 
 # Dependencies List
 
-- Watson Developer Cloud : [Watson Speech to Text](https://www.ibm.com/watson/developercloud/speech-to-text.html), [Watson Conversation](https://www.ibm.com/watson/developercloud/conversation.html), and [Watson Text to Speech](https://www.ibm.com/watson/developercloud/text-to-speech.html).
+- Watson Developer Cloud : [Watson Speech to Text](https://www.ibm.com/watson/services/speech-to-text), [Watson Assistant](https://www.ibm.com/cloud/watson-assistant/), and [Watson Text to Speech](https://www.ibm.com/watson/services/text-to-speech).
 - [mic](https://www.npmjs.com/package/mic) npm package : for reading audio input
 - [pigpio](https://www.npmjs.com/package/pigpio) npm package : Fast (software) GPIO, PWM, servo control, state change notification, and interrupt handling on the Raspberry Pi.
 - [web-audio-api](https://www.npmjs.com/package/web-audio-api) : implementation (partial) of the HTML5 web audio api, used to decode sound files.
