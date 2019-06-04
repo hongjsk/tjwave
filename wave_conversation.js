@@ -400,7 +400,8 @@ var config = require("./config");
 var child_process = require('child_process');
 
 var visual_recognition = new VisualRecognitionV3({
-  api_key: (config.VisionKey || config.Vision_IAM_APIKEY),
+  api_key: config.VisionKey,
+  iam_apikey: config.Vision_IAM_APIKEY,
   version: config.VisionVersion,
   url: config.Vision_URL
 });
