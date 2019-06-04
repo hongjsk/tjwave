@@ -35,8 +35,8 @@ var speech_to_text = new SpeechToTextV1({
 var fs = require('fs');
 var exec = require('child_process').exec;
 
-var WatsonAssistantV2 = require('watson-developer-cloud/assistant/v2');
-var assistant = new WatsonAssistantV2({
+var WatsonAssistantV1 = require('watson-developer-cloud/assistant/v1');
+var assistant = new WatsonAssistantV1({
   username: config.AssistUsername,
   password: config.AssistPassword,
   iam_apikey: config.Assist_IAM_APIKEY,
@@ -51,6 +51,13 @@ var text_to_speech = new TextToSpeechV1({
   iam_apikey: config.TTS_IAM_APIKEY,
   url: config.TTS_URL,
   version: 'v1'
+});
+text_to_speech.listVoices(null, function(error, data) {
+  if (error) {
+    console.log(error);
+  } else {
+    //console.log(data.voices);
+  }
 });
 
 var AudioContext = require('web-audio-api').AudioContext
