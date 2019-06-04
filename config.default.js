@@ -18,6 +18,7 @@ exports.TTS_URL = '';
 exports.AssistPassword = ''; // assistant service password
 exports.AssistUsername = ''; // assistant service username
 exports.AssistWorkspace = ''; // Assistant workspace id
+exports.AssistId = ''; // Assistant id
 exports.Assist_IAM_APIKEY = ''; // Assistant IAM APIKey
 exports.Assist_URL = ''; // Assistant service endpoint url
 
